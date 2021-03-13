@@ -1,0 +1,3 @@
+[submodule "naver_map_js2dart"]
+	path = naver_map_js2dart
+	url = https://github.com/taeilyoon/naver_map_js2dart.git
