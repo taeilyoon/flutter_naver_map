@@ -16,11 +16,17 @@ dependencies:
   flinq: ^1.1.0
   uuid: ^2.1.0
   naver_map_js2dart : 
-    path : "../naver_map_js2dart"
-  flutter_naver_platform_interface : 
-    path : "../flutter_naver_platform_interface"
+    git: 
+      url : https://github.com/taeilyoon/flutter_naver_map.git
+      path : naver_map_js2dart
+  flutter_naver_platform_interface :
+   git: 
+      url : https://github.com/taeilyoon/flutter_naver_map.git
+      path : flutter_naver_platform_interface
   flutter_naver_map_web : 
-    path : "../flutter_naver_map_web"
+    git: 
+      url : https://github.com/taeilyoon/flutter_naver_map.git
+      path : flutter_naver_map_web
 
 dev_dependencies:
   flutter_test:
