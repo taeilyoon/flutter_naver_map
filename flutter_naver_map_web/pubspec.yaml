@@ -1,0 +1,30 @@
+name: flutter_naver_map_web
+description: A new flutter plugin project.
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.12.0-259.9.beta <3.0.0"
+  flutter: ">=1.20.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  naver_map_js2dart : 
+    path : "../naver_map_js2dart"
+  flutter_naver_platform_interface : 
+    path : "../flutter_naver_platform_interface"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      web:
+        pluginClass: FlutterNaverMap
+        fileName: flutter_naver_map_web.dart
