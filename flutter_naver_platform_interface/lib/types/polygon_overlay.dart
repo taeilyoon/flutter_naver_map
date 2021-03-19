@@ -72,6 +72,7 @@ class PolygonOverlay {
     this.globalZIndex = 0,
     this.holes,
     this.onTap,
+    this.eventsHandle,
   })  : assert(polygonOverlayId != null),
         assert(coordinates != null),
         assert(coordinates.length >= 3);

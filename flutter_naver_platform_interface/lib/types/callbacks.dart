@@ -22,11 +22,9 @@ typedef void OnPathOverlayTab(PathOverlayId pathOverlayId);
 enum MapEventEnum {
   // none,
   onTap,
-  // onCameraPositionChanged,
-  // onLongTap,
-  // onDoubleTap,
   onRightClick,
-  // onScroll,
+  onMouseEnter,
+  onMouseExit,
 }
 
 class MapEventModel {

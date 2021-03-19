@@ -117,9 +117,23 @@ class FlutterNaverMap extends NaverMapPlatform {
       }
     });
 
-    newPolygon.forEach((element) {
+    newPolygon.where((element) => !poly.contains(element)).forEach((element) {
       poly.add(element);
       polyjs.putIfAbsent(element.polygonOverlayId, () => element.js(map));
+      polyjs[element.polygonOverlayId]?.addListener("click",
+          allowInterop(() {
+            if (element.onTap != null) {
+              element.onTap!(element.polygonOverlayId);
+            }
+          }));
+      element.eventsHandle?.forEach((key, value) {
+        var eventName = key.js;
+        polyjs[element.polygonOverlayId]?.addListener(eventName,
+            allowInterop(() {
+              value(element.polygonOverlayId);
+            }));
+      });
+
     });
   }
 
@@ -141,22 +155,21 @@ class FlutterNaverMap extends NaverMapPlatform {
           }));
           markerjs[element.markerId]?.clearListeners("click");
           markerjs[element.markerId]?.clearListeners("rightClick");
-          markerjs[element.markerId]?.addListener("click",
-              allowInterop(() {
+          markerjs[element.markerId]?.addListener("click", allowInterop(() {
             if (element.onMarkerTab != null) {
               element.onMarkerTab!(element, {});
             }
           }));
           element.eventsHandle?.forEach((key, value) {
-            markerjs[element.markerId]?.addListener(key.js,
-                allowInterop(() {
+            markerjs[element.markerId]?.addListener(key.js, allowInterop(() {
               value(element.markerId);
             }));
+          });
+        } else {
+          //Remove
+          markerjs[element.markerId]!.setMap(null);
+          markers.remove(element);
         }
-      } else {
-        //Remove
-        markerjs[element.markerId]!.setMap(null);
-        markers.remove(element);
       }
     });
     newMarkers
@@ -166,27 +179,6 @@ class FlutterNaverMap extends NaverMapPlatform {
       markerjs.putIfAbsent(element.markerId, () => element.js(map));
     });
   }
-
-  // @override
-  // Future updatePolyline(int id, List<PolygonOverlay> paths) async {
-  //   var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
-  //   var poly = _naverMaps[id]?["polygons"] as List<PolygonOverlay>;
-  //   var polyjs = (_naverMaps[id]?["polygonsjs"] as Map<String, web.Polygon>);
-  //   poly.forEach((element) {
-  //     List<PolygonOverlay> smaeIdPolygons = paths
-  //         .where((e) => element.polygonOverlayId == e.polygonOverlayId)
-  //         .toList();
-  //     if (smaeIdPolygons.isEmpty) {
-  //       poly.remove(element);
-  //       polyjs[smaeIdPolygons[0].polygonOverlayId]!.setMap(null);
-  //     } else if (smaeIdPolygons[0] != element) {
-  //       polyjs[smaeIdPolygons[0].polygonOverlayId]!
-  //           .setOptions(smaeIdPolygons[0].toOptions);
-  //     } else {
-  //       polyjs[smaeIdPolygons[0].polygonOverlayId] smaeIdPolygons[0].js(map!);
-  //     }
-  //   });
-  // }
 
   @override
   Future updateEventHandler(int textureId, List<MapEventModel> events) async {

@@ -69,6 +69,15 @@ extension WebEventEnum on MapEventEnum {
       case MapEventEnum.onRightClick:
         return "rightclick";
         break;
+      case MapEventEnum.onMouseEnter:
+        return "mouseover";
+        break;
+      case MapEventEnum.onMouseExit:
+        return "mouseout";
+        break;
+      case MapEventEnum.onMouseExit:
+        return "mouseout";
+        break;
     }
   }
 }
