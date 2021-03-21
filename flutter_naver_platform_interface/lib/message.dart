@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'naver_map_platform_interface.dart';
 
 class TextureMessage {

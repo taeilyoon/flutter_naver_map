@@ -10,28 +10,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_naver_platform_interface/message.dart';
 import 'dart:ui' as ui;
 import 'method_channel_naver_map.dart';
-
-part 'types/callbacks.dart';
-part 'types/option.dart';
-
-part 'types/camera.dart';
-
-part 'types/circle_overlay.dart';
-
-part 'types/location.dart';
-
-part 'types/marker.dart';
-
-part 'types/overlay_image.dart';
-
-part 'types/path_overlay.dart';
-
-part 'types/ui.dart';
-
-part 'types/polygon_overlay.dart';
 
 const String VIEW_TYPE = 'flutter_naver_map';
 

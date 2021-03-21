@@ -1,5 +1,4 @@
 part of flutter_naver_map;
-// typedef void MapCreateCallback(NaverMapController controller);
 
 typedef void CameraPositionCallback(CameraPosition position);
 
@@ -30,6 +29,6 @@ enum MapEventEnum {
 class MapEventModel {
   String id;
   MapEventEnum event = MapEventEnum.onTap;
-  late Function func;
+  late dynamic func;
   MapEventModel({required this.id, required this.event, required this.func});
 }
