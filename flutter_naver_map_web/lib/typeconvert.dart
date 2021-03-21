@@ -1,7 +1,7 @@
 import 'dart:html' as html;
 import 'dart:ui';
 
-import 'package:flutter_naver_platform_interface/naver_map_platform_interface.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:naver_map_js2dart/src/generated/naver_map_core.dart' as web;
 
 extension convertMapOption on MapOption {

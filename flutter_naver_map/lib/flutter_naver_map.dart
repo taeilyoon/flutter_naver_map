@@ -42,11 +42,11 @@ class NaverMap extends StatefulWidget {
     this.onCameraIdle,
     this.pathOverlays,
     required this.initialCameraPosition,
-    this.mapType = MapType.Basic,
+    // this.mapType = MapType.Basic,
     this.liteModeEnable = false,
     this.nightModeEnable = false,
     this.indoorEnable = false,
-    this.activeLayers = const [MapLayer.LAYER_GROUP_BUILDING],
+    // this.activeLayers = const [MapLayer.LAYER_GROUP_BUILDING],
     this.buildingHeight = 1.0,
     this.symbolScale = 1.0,
     this.symbolPerspectiveRatio = 1.0,
@@ -91,7 +91,7 @@ class NaverMap extends StatefulWidget {
   final CameraPosition initialCameraPosition;
 
   /// 지도 타입 설정.
-  final MapType mapType;
+  // final MapType mapType;
 
   /// 이 속성을 사용하면 라이트 모드를 활성화할 수 있습니다.
   /// 기본값은 false입니다.
@@ -131,7 +131,7 @@ class NaverMap extends StatefulWidget {
   /// null 인경우 [MapLayer.LAYER_GROUP_BUILDING]이 기본값으로 설정됩니다.
   ///
   /// 건물레이어를 지우고 싶으면 빈 리스트를 파라미터로 넘겨주세요.
-  final List<MapLayer> activeLayers;
+  // final List<MapLayer> activeLayers;
 
   /// 지도가 기울어지면 건물이 입체적으로 표시됩니다. buildingHeight 속성을 사용하면
   /// 입체적으로 표현되는 건물의 높이를 지정할 수 있습니다.

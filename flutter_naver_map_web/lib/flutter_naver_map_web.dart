@@ -9,6 +9,7 @@ import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_naver_platform_interface/naver_map_platform_interface.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'dart:ui' as ui;
@@ -256,7 +257,8 @@ class FlutterNaverMap extends NaverMapPlatform {
         .where((element) => !polylines.contains(element))
         .forEach((element) {
       polylines.add(element);
-      polylinejs.putIfAbsent(element.pathOverlayId, () => element.js(map));
+      polylinejs.putIfAbsent(
+          element.pathOverlayId.value, () => element.js(map));
     });
   }
 
