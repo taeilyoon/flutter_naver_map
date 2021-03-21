@@ -6,14 +6,20 @@ description: Demonstrates how to use the flutter_naver_map plugin.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
+  # flutter_naver_map:
+  #   git: 
+  #     url : https://github.com/taeilyoon/flutter_naver_map.git
+  #     path : flutter_naver_map
   flutter_naver_map:
-    path: ../
+    git: 
+      url : https://github.com/taeilyoon/flutter_naver_map.git
+      path : flutter_naver_map
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -25,7 +31,9 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+analyzer:
+  enable-experiment:
+    - non-nullable
 # The following section is specific to Flutter.
 flutter:
 

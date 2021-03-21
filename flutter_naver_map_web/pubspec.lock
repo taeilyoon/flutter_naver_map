@@ -79,16 +79,20 @@ packages:
   flutter_naver_map:
     dependency: "direct main"
     description:
-      path: "../flutter_naver_map"
-      relative: true
-    source: path
+      path: flutter_naver_map
+      ref: HEAD
+      resolved-ref: "87a9386f0f7366c4c3316a3f0b69ce3476e08bd1"
+      url: "https://github.com/taeilyoon/flutter_naver_map.git"
+    source: git
     version: "0.0.1"
   flutter_naver_platform_interface:
     dependency: "direct main"
     description:
-      path: "../flutter_naver_platform_interface"
-      relative: true
-    source: path
+      path: flutter_naver_platform_interface
+      ref: HEAD
+      resolved-ref: "87a9386f0f7366c4c3316a3f0b69ce3476e08bd1"
+      url: "https://github.com/taeilyoon/flutter_naver_map.git"
+    source: git
     version: "0.0.1"
   flutter_test:
     dependency: "direct dev"

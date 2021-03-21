@@ -86,23 +86,29 @@ packages:
   flutter_naver_map:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: flutter_naver_map
+      ref: HEAD
+      resolved-ref: "4adfbf1bca326100b986b3fc301019ac0f291dac"
+      url: "https://github.com/taeilyoon/flutter_naver_map.git"
+    source: git
     version: "0.0.1"
   flutter_naver_map_web:
     dependency: transitive
     description:
-      path: "../../flutter_naver_map_web"
-      relative: true
-    source: path
+      path: flutter_naver_map_web
+      ref: HEAD
+      resolved-ref: "4adfbf1bca326100b986b3fc301019ac0f291dac"
+      url: "https://github.com/taeilyoon/flutter_naver_map.git"
+    source: git
     version: "0.0.1"
   flutter_naver_platform_interface:
     dependency: transitive
     description:
-      path: "../../flutter_naver_platform_interface"
-      relative: true
-    source: path
+      path: flutter_naver_platform_interface
+      ref: HEAD
+      resolved-ref: "4adfbf1bca326100b986b3fc301019ac0f291dac"
+      url: "https://github.com/taeilyoon/flutter_naver_map.git"
+    source: git
     version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
@@ -227,5 +233,5 @@ packages:
     source: hosted
     version: "2.1.0"
 sdks:
-  dart: ">=2.12.0-259.9.beta <3.0.0"
+  dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.20.0"

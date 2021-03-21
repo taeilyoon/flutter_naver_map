@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  NaverMapController controller;
+  late NaverMapController controller;
   @override
   void initState() {
     super.initState();
