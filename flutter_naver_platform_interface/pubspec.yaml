@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ">=1.0.0 <3.0.0"
   naver_map_js2dart : 
-    path : "../naver_map_js2dart"
+    git : https://github.com/taeilyoon/naver_map_js2dart.git
 
 dev_dependencies:
   flutter_test:
