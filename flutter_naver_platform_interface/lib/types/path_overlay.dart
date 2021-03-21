@@ -130,6 +130,8 @@ class PathOverlay {
   /// 탭 이벤트를 먹은 [PathOverlayId]를 반환합니다.
   final OnPathOverlayTab? onPathOverlayTab;
 
+  var eventsHandle;
+
   Map<String, dynamic> get json => {
         'pathOverlayId': pathOverlayId.value,
         'coords': coords.map<List<double>>((coord) => coord.json).toList(),

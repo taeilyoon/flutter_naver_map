@@ -68,17 +68,19 @@ abstract class NaverMapPlatform {
   void _verifyProvidesDefaultImplementations() {}
 
   Future updatePolygon(int id, List<PolygonOverlay> polys) async {
-    throw UnimplementedError('buildView() has not been implemented.');
+    throw UnimplementedError('updatePolygon() has not been implemented.');
   }
 
   Future updateMarker(int id, List<Marker> markers) async {
-    throw UnimplementedError('buildView() has not been implemented.');
+    throw UnimplementedError('updateMarker() has not been implemented.');
   }
 
-  Future updatePolyline(int id, List<PathOverlay> paths) async {
-    throw UnimplementedError('buildView() has not been implemented.');
-  }
+  Future updateCircle(int id, List<CircleOverlay> a) async {}
 
+  Future UpdatePolyline(int id, List<PathOverlay> a) async {}
+
+  Future moveCamera(int id, CameraPosition cameraUpdate) async {}
+  Future updateMap(int id, MapOption option) async {}
   Future updateEventHandler(int id, List<MapEventModel> events) async {
     throw UnimplementedError('buildView() has not been implemented.');
   }

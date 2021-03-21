@@ -15,26 +15,20 @@ extension convertLatLng on LatLng {
       LatLng(value.lat().toDouble(), value.lng().toDouble());
 }
 
+extension convertPolyline on PathOverlay {
+  web.Polyline js(web.NMap map) => web.Polyline(this.toOptions..map = map);
+
+  web.PolylineOptions get toOptions => web.PolylineOptions()
+    ..clickable = true
+    ..path = this.coords.map<web.LatLng>((e) => e.js).toList()
+    ..strokeColor = this.color.toHashString()
+    ..strokeOpacity = this.color.alpha;
+}
+
 extension convertPolygon on PolygonOverlay {
   web.Polygon js(web.NMap map) {
     print(this.outlineColor.toHashString());
-    return web.Polygon(web.PolygonOptions()
-      ..map = map
-      ..paths = [
-        web.LatLng(37.37544345085402, 127.11224555969238),
-        web.LatLng(37.37230584065902, 127.10791110992432),
-        web.LatLng(37.35975408751081, 127.10795402526855),
-        web.LatLng(37.359924641705476, 127.11576461791992),
-        web.LatLng(37.35931064479073, 127.12211608886719),
-        web.LatLng(37.36043630196386, 127.12293148040771),
-        web.LatLng(37.36354029942161, 127.12310314178465),
-        web.LatLng(37.365211629488016, 127.12456226348876),
-        web.LatLng(37.37544345085402, 127.11224555969238)
-      ]
-      ..fillColor = '#ff0000'
-      ..fillOpacity = 0.3
-      ..strokeColor = '#ff0000');
-    // ..addListener(eventName, listener);
+    return web.Polygon(this.toOptions..map = map);
   }
 
   web.PolygonOptions get toOptions => web.PolygonOptions()

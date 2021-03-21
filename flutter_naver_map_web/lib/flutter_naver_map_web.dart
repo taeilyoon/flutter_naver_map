@@ -44,6 +44,10 @@ class FlutterNaverMap extends NaverMapPlatform {
               "markerjs": <String, web.Marker>{},
               "polygons": <PolygonOverlay>[],
               "polygonjs": <String, web.Polygon>{},
+              "polylines": <PathOverlay>[],
+              "polylinejs": <String, web.Polyline>{},
+              "circles": <CircleOverlay>[],
+              "circlejs": <String, web.Circle>{},
             });
 
     // web.Polygon(web.PolygonOptions()
@@ -120,20 +124,18 @@ class FlutterNaverMap extends NaverMapPlatform {
     newPolygon.where((element) => !poly.contains(element)).forEach((element) {
       poly.add(element);
       polyjs.putIfAbsent(element.polygonOverlayId, () => element.js(map));
-      polyjs[element.polygonOverlayId]?.addListener("click",
-          allowInterop(() {
-            if (element.onTap != null) {
-              element.onTap!(element.polygonOverlayId);
-            }
-          }));
+      polyjs[element.polygonOverlayId]?.addListener("click", allowInterop(() {
+        if (element.onTap != null) {
+          element.onTap!(element.polygonOverlayId);
+        }
+      }));
       element.eventsHandle?.forEach((key, value) {
         var eventName = key.js;
         polyjs[element.polygonOverlayId]?.addListener(eventName,
             allowInterop(() {
-              value(element.polygonOverlayId);
-            }));
+          value(element.polygonOverlayId);
+        }));
       });
-
     });
   }
 
@@ -209,6 +211,68 @@ class FlutterNaverMap extends NaverMapPlatform {
         });
       }));
     }
+  }
+
+  Future UpdatePolyline(int id, List<PathOverlay> newPolyline) async {
+    var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
+    var polylines = _naverMaps[id]?["polylines"] as List<PathOverlay>;
+    var polylinejs =
+        (_naverMaps[id]?["polylinejs"] as Map<String, web.Polyline>);
+
+    polylines.forEach((element) {
+      if (newPolyline.contains(element)) {
+        //Modify
+        var newElement = newPolyline.firstWhere(
+            (newElement) => element.pathOverlayId == newElement.pathOverlayId);
+        if (newElement != element) {
+          polylinejs[element.pathOverlayId]?.setOptions(newElement.toOptions);
+          polylinejs[element.pathOverlayId]?.clearListeners("click");
+          polylinejs[element.pathOverlayId]?.addListener("click",
+              allowInterop((e) {
+            print(e);
+          }));
+          polylinejs[element.pathOverlayId]?.clearListeners("click");
+          polylinejs[element.pathOverlayId]?.clearListeners("rightClick");
+          polylinejs[element.pathOverlayId]?.addListener("click",
+              allowInterop(() {
+            if (element.onPathOverlayTab != null) {
+              element.onPathOverlayTab!(element.pathOverlayId);
+            }
+          }));
+          element.eventsHandle?.forEach((key, value) {
+            polylinejs[element.pathOverlayId]?.addListener(key.js,
+                allowInterop(() {
+              value(element.pathOverlayId);
+            }));
+          });
+        } else {
+          //Remove
+          polylinejs[element.pathOverlayId]!.setMap(null);
+          polylines.remove(element);
+        }
+      }
+    });
+    newPolyline
+        .where((element) => !polylines.contains(element))
+        .forEach((element) {
+      polylines.add(element);
+      polylinejs.putIfAbsent(element.pathOverlayId, () => element.js(map));
+    });
+  }
+
+  @override
+  Future updateCircle(int id, List<CircleOverlay> a) async {}
+  @override
+  Future moveCamera(int id, CameraPosition cameraPosition) async {
+    var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
+    map.setCenter(cameraPosition.target.js);
+    map.setZoom(cameraPosition.zoom, true);
+  }
+
+  @override
+  Future updateMap(int id, MapOption option) async {
+    var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
+    map.setOptions(option.webMapOption, 0);
   }
 }
 
