@@ -292,11 +292,9 @@ class _FlutterNaverMap {
   void initialize() {
     mapDivElement = DivElement()
       ..id = '$elementName-$textureId'
-      ..style.width = '100%'
-      ..style.height = '100%'
       ..style.border = 'none';
     webMap = web.NMap(mapDivElement, option.webMapOption);
-    Future.delayed(Duration.zero, () {
+    Future.delayed(Duration(milliseconds: 2), () {
       webMap.setSize(
           web.Size(mapDivElement.clientWidth, mapDivElement.clientHeight));
     });
