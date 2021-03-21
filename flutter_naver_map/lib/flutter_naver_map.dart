@@ -190,7 +190,7 @@ class NaverMap extends StatefulWidget {
   final List<Marker> markers;
 
   /// 지도에 표시될 [PathOverlay]의 [Set] 입니다..
-  final Set<PathOverlay>? pathOverlays;
+  final List<PathOverlay>? pathOverlays;
 
   /// 지도에 표시될 [CircleOverlay]의 [List]입니다.
   final List<CircleOverlay> circles;
@@ -276,6 +276,7 @@ class NaverMapController {
   List<Marker> markers = [];
   List<PolygonOverlay> polygons = [];
   List<MapEventModel> events = [];
+  List<PathOverlay> paths = [];
   LatLng? location;
 
   /// This is just exposed for testing. It shouldn't be used by anyone depending
@@ -313,7 +314,11 @@ class NaverMapController {
     _videoPlayerPlatform.updateMarker(_textureId, markers);
   }
 
-  removeMarker(Marker marker) {}
+  removeMarker(String id) {
+    this.markers.removeWhere((element) => element.markerId == id);
+    updateMarkers(this.markers);
+  }
+
   updateMarkers(List<Marker> markers) {
     if (markers != this.markers) {
       this.markers = markers;
@@ -331,6 +336,18 @@ class NaverMapController {
       this.polygons = polygons;
     }
     _videoPlayerPlatform.updatePolygon(_textureId, polygons);
+  }
+
+  addPath(PathOverlay polygon) {
+    this.paths.add(polygon);
+    updatePolygon(polygons);
+  }
+
+  updatePath(List<PathOverlay> polygons) {
+    if (this.paths != polygons) {
+      this.paths = polygons;
+    }
+    _videoPlayerPlatform.UpdatePolyline(_textureId, paths);
   }
 }
 
