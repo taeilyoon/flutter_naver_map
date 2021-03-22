@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                 .updatePath([PathOverlay(PathOverlayId("test"), ls)]);
           }
         },
-        markers: [
+        markers: [,
           Marker(
               markerId: "info",
               position: LatLng(37.3674001, 127.1181196),
@@ -149,7 +149,7 @@ class _MyAppState extends State<MyApp> {
                   controller.showInfoWindow(
                       InfoWindow(
                           position: LatLng(37.3674001, 127.1181196),
-                          content: "sex"),
+                          content: "hello"),
                       "info");
                 },
                 MapEventEnum.onMouseOut: (_) {
@@ -169,7 +169,7 @@ class _MyAppState extends State<MyApp> {
                 }
               })
         ],
-        pathOverlays: [
+        pathOverlays: [,
           PathOverlay(
               PathOverlayId("Asasd"),
               [
@@ -187,7 +187,7 @@ class _MyAppState extends State<MyApp> {
               outlineWidth: 20,
               width: 5)
         ],
-        polygons: [],
+        polygons: [,
       ),
     ));
   }
