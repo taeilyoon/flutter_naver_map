@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ part 'types/marker.dart';
 part 'types/overlay_image.dart';
 part 'types/path_overlay.dart';
 part 'types/polygon_overlay.dart';
+
+part 'types/info_window.dart';
 
 final NaverMapPlatform _videoPlayerPlatform = NaverMapPlatform.instance
   // This will clear all open videos on the platform when a full restart is
@@ -40,7 +43,7 @@ class NaverMap extends StatefulWidget {
     this.onSymbolTap,
     this.onCameraChange,
     this.onCameraIdle,
-    this.pathOverlays,
+    this.pathOverlays = const [],
     required this.initialCameraPosition,
     // this.mapType = MapType.Basic,
     this.liteModeEnable = false,
@@ -190,7 +193,7 @@ class NaverMap extends StatefulWidget {
   final List<Marker> markers;
 
   /// 지도에 표시될 [PathOverlay]의 [Set] 입니다..
-  final List<PathOverlay>? pathOverlays;
+  final List<PathOverlay> pathOverlays;
 
   /// 지도에 표시될 [CircleOverlay]의 [List]입니다.
   final List<CircleOverlay> circles;
@@ -242,8 +245,10 @@ class _NaverMapState extends State<NaverMap> {
             ]);
           }
 
-          controller.updateMarkers(widget.markers ?? []);
-          controller.updatePolygon(widget.polygons ?? []);
+          controller.updateMarkers(widget.markers);
+          controller.updatePolygon(widget.polygons);
+          controller.updatePath(widget.pathOverlays);
+          controller.updatePath(widget.pathOverlays);
 
           widget.onMapCreated(controller);
         }
@@ -349,7 +354,16 @@ class NaverMapController {
     if (this.paths != newpaths) {
       this.paths = newpaths;
     }
+    print("update polyline : length is ${newpaths.length}");
     _videoPlayerPlatform.UpdatePolyline(_textureId, paths);
+  }
+
+  showInfoWindow(InfoWindow info, markerId) {
+    _videoPlayerPlatform.showWindow(_textureId, info, markerId);
+  }
+
+  hideInfoWindow() {
+    _videoPlayerPlatform.hideWindow(_textureId);
   }
 }
 

@@ -1,6 +1,8 @@
 import 'dart:html' as html;
+import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:naver_map_js2dart/src/generated/naver_map_core.dart' as web;
 
@@ -41,15 +43,38 @@ extension convertPolygon on PolygonOverlay {
 }
 
 extension convertMarker on Marker {
-  js(web.NMap map) => web.Marker(web.MarkerOptions()
-    ..map = map
-    ..position = this.position.js);
-  // ..icon = this.webIcon != null
-  //     ? (web.MarkerIcon()..content = this.webIcon!["content"])
-  //     : null);
+  js(web.NMap map) => webIcon != null
+      ? web.Marker(this.toOptions..map = map)
+      : web.Marker(this.toOptions..map = map);
 
-  web.MarkerOptions get toOptions =>
-      web.MarkerOptions()..position = this.position.js;
+  web.MarkerOptions get toOptions => web.MarkerOptions()
+    ..position = this.position.js
+    ..markerIcon = webIcon != null
+        ? (web.MarkerIcon()
+          ..content = this.webIcon?["content"]
+          ..anchor = (this.webIcon?["anchor"] as Point).js)
+        : null;
+}
+
+extension NaverMapPoint on Point {
+  web.Point get js => web.Point(this.x, this.y);
+}
+
+extension WEbInfoWindow on InfoWindow {
+  web.InfoWindow js(web.NMap map) =>
+      web.InfoWindow(this.toOptions)..open(map, this.position.js);
+  web.InfoWindowOptions get toOptions => web.InfoWindowOptions()
+    ..anchorColor = this.anchorColor
+    ..anchorSize = this.anchorSize?.js
+    ..position = this.position.js
+    ..backGroundColor = (this.backGroundColor ?? Colors.white).toHashString()
+    ..borderColor = (this.borderColor ?? Colors.black).toHashString()
+    ..maxWidth = this.maxWidth
+    ..content = this.content;
+}
+
+extension WebSize on Size {
+  get js => web.Size(this.width, this.height);
 }
 
 extension WebColorExtensions on Color {

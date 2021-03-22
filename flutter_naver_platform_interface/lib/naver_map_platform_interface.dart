@@ -66,4 +66,8 @@ abstract class NaverMapPlatform {
   Future updateEventHandler(int id, List<MapEventModel> events) async {
     throw UnimplementedError('buildView() has not been implemented.');
   }
+
+  Future showWindow(int id, InfoWindow window, String markerId) async {}
+
+  void hideWindow(int textureId) {}
 }

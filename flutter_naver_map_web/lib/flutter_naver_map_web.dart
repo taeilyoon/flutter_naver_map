@@ -49,6 +49,8 @@ class FlutterNaverMap extends NaverMapPlatform {
               "polylinejs": <String, web.Polyline>{},
               "circles": <CircleOverlay>[],
               "circlejs": <String, web.Circle>{},
+              "window": null,
+              "windowjs": null
             });
     // web.Polygon(web.PolygonOptions()
     //   ..map = map.webMap
@@ -207,6 +209,7 @@ class FlutterNaverMap extends NaverMapPlatform {
     // }
   }
 
+  @override
   Future UpdatePolyline(int id, List<PathOverlay> newPolyline) async {
     var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
     var markers = _naverMaps[id]?["polylines"] as List<PathOverlay>;
@@ -266,6 +269,36 @@ class FlutterNaverMap extends NaverMapPlatform {
   Future updateMap(int id, MapOption option) async {
     var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
     map.setOptions(option.webMapOption, 0);
+  }
+
+  @override
+  Future showWindow(
+    int id,
+    InfoWindow window,
+    String markerId,
+  ) async {
+    var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
+    _naverMaps[id]?["window"] = window;
+    print(_naverMaps[id]?["window"]);
+    var info = _naverMaps[id]?["window"] as InfoWindow;
+    var infojs = _naverMaps[id]?["windowjs"] as web.InfoWindow?;
+    var markerjs = _naverMaps[id]?["markerjs"] as Map<String, web.Marker>;
+    infojs?.close();
+    var a = info.js(map);
+    print(a);
+    _naverMaps[id]?["windowjs"] = a;
+
+    Future.delayed(Duration(seconds: 1), () {
+      _naverMaps[id]?["windowjs"].open(map, markerjs[markerId]);
+    });
+  }
+
+  void hideWindow(int id) {
+    var info = _naverMaps[id]?["window"] as InfoWindow?;
+    var infojs = _naverMaps[id]?["windowjs"] as web.InfoWindow?;
+    infojs?.close();
+    _naverMaps[id]?["window"] = null;
+    _naverMaps[id]?["windowjs"] = null;
   }
 }
 
