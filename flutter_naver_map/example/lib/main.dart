@@ -93,58 +93,38 @@ class _MyAppState extends State<MyApp> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          var contentString = [
-            '<div class="iw_inner">',
-            '   <h3>서울특별시청</h3>',
-            '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br>',
-            '       <img src="./img/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br>',
-            '       02-120 | 공공,사회기관 > 특별,광역시청<br>',
-            '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-            '   </p>',
-            '</div>'
-          ].join('');
+          // var contentString = [
+          //   '<div class="iw_inner">',
+          //   '   <h3>서울특별시청</h3>',
+          //   '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br>',
+          //   '       <img src="./img/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br>',
+          //   '       02-120 | 공공,사회기관 > 특별,광역시청<br>',
+          //   '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+          //   '   </p>',
+          //   '</div>'
+          // ].join('');
 
-          controller.showInfoWindow(
-              InfoWindow(
-                  position: LatLng(37.3674001, 127.1181196),
-                  content: contentString),
-              "info");
-        },
-      ),
-      body: NaverMap(
-        controller: controller,
-        initialCameraPosition:
-            CameraPosition(target: LatLng(37.3674001, 127.1181196), zoom: 10),
-        onMapCreated: (c) {
-          controller = c;
-        },
-        onMapTap: (lat) {
-          this.controller.addMarker(Marker(
-                  markerId: "${lat.latitude}",
-                  position: lat,
-                  eventsHandle: {
-                    MapEventEnum.onRightClick: (_) {
-                      this.controller.removeMarker("${lat.latitude}");
-                      this.ls.remove(lat);
-                      if (ls.length > 1) {
-                        this.controller.updatePath(
-                            [PathOverlay(PathOverlayId("test"), ls)]);
-                      }
-                    }
-                  }));
-          this.ls.add(lat);
-          if (ls.length > 1) {
-            this
-                .controller
-                .updatePath([PathOverlay(PathOverlayId("test"), ls)]);
-          }
-        },
-        markers: [,
-          Marker(
-              markerId: "info",
-              position: LatLng(37.3674001, 127.1181196),
-              zIndex: 10,
-              eventsHandle: {
+          // controller.showInfoWindow(
+          //     InfoWindow(
+          //         position: LatLng(37.3674001, 127.1181196),
+          //         content: contentString),
+          //     "info");
+
+          controller.updatePolygon([
+            PolygonOverlay("polygonOverlayId", [
+              LatLng(37.37544345085402, 127.11224555969238),
+              LatLng(37.37230584065902, 127.10791110992432),
+              LatLng(37.35975408751081, 127.10795402526855),
+              LatLng(37.359924641705476, 127.11576461791992),
+              LatLng(37.35931064479073, 127.12211608886719),
+              LatLng(37.36043630196386, 127.12293148040771),
+              LatLng(37.36354029942161, 127.12310314178465),
+              LatLng(37.365211629488016, 127.12456226348876),
+              LatLng(37.37544345085402, 127.11224555969238)
+            ], onTap: (_) {
+              print(_);
+            }, globalZIndex: 100)
+              ..eventsHandle = {
                 MapEventEnum.onMouseOver: (_) {
                   controller.showInfoWindow(
                       InfoWindow(
@@ -155,39 +135,98 @@ class _MyAppState extends State<MyApp> {
                 MapEventEnum.onMouseOut: (_) {
                   controller.hideInfoWindow();
                 }
-              },
-              webIcon: {
-                "content":
-                    '<div style="display:inline-block;padding:5px;text-align:center;background-color:#fff;border:1px solid #000;"><span>' +
-                        "${i}" +
-                        '</span></div>',
-                "anchor": new Point(5, 5),
-                "css": {
-                  'font-size': '14px',
-                  'font-weight': 'bold',
-                  'color': '#f00'
-                }
-              })
-        ],
-        pathOverlays: [,
-          PathOverlay(
-              PathOverlayId("Asasd"),
-              [
-                LatLng(37.37544345085402, 127.11224555969238),
-                LatLng(37.37230584065902, 127.10791110992432),
-                LatLng(37.35975408751081, 127.10795402526855),
-                LatLng(37.359924641705476, 127.11576461791992),
-                LatLng(37.35931064479073, 127.12211608886719),
-                LatLng(37.36043630196386, 127.12293148040771),
-                LatLng(37.36354029942161, 127.12310314178465),
-                LatLng(37.365211629488016, 127.12456226348876),
-                LatLng(37.37544345085402, 127.11224555969238)
-              ],
-              color: Colors.black,
-              outlineWidth: 20,
-              width: 5)
-        ],
-        polygons: [,
+              }
+          ]);
+        },
+      ),
+      body: NaverMap(
+        controller: controller,
+        initialCameraPosition:
+            CameraPosition(target: LatLng(37.3674001, 127.1181196), zoom: 10),
+        onMapCreated: (c) {
+          controller = c;
+        },
+        // onMapTap: (lat) {
+        //   this.controller.addMarker(Marker(
+        //           markerId: "${lat.latitude}",
+        //           position: lat,
+        //           eventsHandle: {
+        //             MapEventEnum.onRightClick: (_) {
+        //               this.controller.removeMarker("${lat.latitude}");
+        //               this.ls.remove(lat);
+        //               if (ls.length > 1) {
+        //                 this.controller.updatePath(
+        //                     [PathOverlay(PathOverlayId("test"), ls)]);
+        //               }
+        //             }
+        //           }));
+        //   this.ls.add(lat);
+        //   if (ls.length > 1) {
+        //     this
+        //         .controller
+        //         .updatePath([PathOverlay(PathOverlayId("test"), ls)]);
+        //   }
+        // },
+        // markers: [
+        //   Marker(
+        //       markerId: "info",
+        //       position: LatLng(37.3674001, 127.1181196),
+        //       zIndex: 10,
+        //       eventsHandle: {
+        //         MapEventEnum.onMouseOver: (_) {
+        //           controller.showInfoWindow(
+        //               InfoWindow(
+        //                   position: LatLng(37.3674001, 127.1181196),
+        //                   content: "hello"),
+        //               "info");
+        //         },
+        //         MapEventEnum.onMouseOut: (_) {
+        //           controller.hideInfoWindow();
+        //         }
+        //       },
+        //       webIcon: {
+        //         "content":
+        //             '<div style="display:inline-block;padding:5px;text-align:center;background-color:#fff;border:1px solid #000;"><span>' +
+        //                 "${i}" +
+        //                 '</span></div>',
+        //         "anchor": new Point(5, 5),
+        //         "css": {
+        //           'font-size': '14px',
+        //           'font-weight': 'bold',
+        //           'color': '#f00'
+        //         }
+        //       })
+        // ],
+        // pathOverlays: [
+        //   PathOverlay(
+        //       PathOverlayId("Asasd"),
+        //       [
+        //         LatLng(37.37544345085402, 127.11224555969238),
+        //         LatLng(37.37230584065902, 127.10791110992432),
+        //         LatLng(37.35975408751081, 127.10795402526855),
+        //         LatLng(37.359924641705476, 127.11576461791992),
+        //         LatLng(37.35931064479073, 127.12211608886719),
+        //         LatLng(37.36043630196386, 127.12293148040771),
+        //         LatLng(37.36354029942161, 127.12310314178465),
+        //         LatLng(37.365211629488016, 127.12456226348876),
+        //         LatLng(37.37544345085402, 127.11224555969238)
+        //       ],
+        //       color: Colors.black,
+        //       outlineWidth: 20,
+        //       width: 5)
+        //     ..eventsHandle = {
+        //       MapEventEnum.onMouseOver: (_) {
+        //         controller.showInfoWindow(
+        //             InfoWindow(
+        //                 position: LatLng(37.3674001, 127.1181196),
+        //                 content: "hello"),
+        //             "info");
+        //       },
+        //       MapEventEnum.onMouseOut: (_) {
+        //         controller.hideInfoWindow();
+        //       }
+        //     }
+        // ],
       ),
     ));
   }

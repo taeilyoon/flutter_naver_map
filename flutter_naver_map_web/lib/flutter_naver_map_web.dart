@@ -93,12 +93,12 @@ class FlutterNaverMap extends NaverMapPlatform {
     var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
     var poligons = _naverMaps[id]?["polygons"] as List<PolygonOverlay>;
     var polyjs = (_naverMaps[id]?["polygonjs"] as Map<String, web.Polygon>);
-
     var newOne = newPolygon.toSet().difference(poligons.toSet());
     var modiOne = newPolygon.toSet().intersection(poligons.toSet());
     var deleteOne = polyjs.keys
         .toSet()
         .difference(newOne.map((e) => e.polygonOverlayId).toSet());
+
     newOne.forEach((element) {
       web.Polygon _ = element.js(map);
       polyjs[element.polygonOverlayId] = _;
