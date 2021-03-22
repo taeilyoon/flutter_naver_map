@@ -17,20 +17,18 @@ dependencies:
     git: 
       url : https://github.com/taeilyoon/naver_map_js2dart.git
 
-  # flutter_naver_platform_interface :
-  #   path : ../flutter_naver_platform_interface
-
-
-  # flutter_naver_map :
-  #   path : ../flutter_naver_map
   flutter_naver_platform_interface :
-    git: 
-      url : https://github.com/taeilyoon/flutter_naver_map.git
-      path : flutter_naver_platform_interface
+    path : ../flutter_naver_platform_interface
   flutter_naver_map :
-    git: 
-      url : https://github.com/taeilyoon/flutter_naver_map.git
-      path: flutter_naver_map
+    path : ../flutter_naver_map
+  # flutter_naver_platform_interface :
+  #   git: 
+  #     url : https://github.com/taeilyoon/flutter_naver_map.git
+  #     path : flutter_naver_platform_interface
+  # flutter_naver_map :
+  #   git: 
+  #     url : https://github.com/taeilyoon/flutter_naver_map.git
+  #     path: flutter_naver_map
 
 
 dev_dependencies:

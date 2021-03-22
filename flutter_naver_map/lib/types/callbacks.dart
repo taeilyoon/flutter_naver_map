@@ -19,16 +19,30 @@ typedef void OnSymbolTap(LatLng position, String caption);
 typedef void OnPathOverlayTab(PathOverlayId pathOverlayId);
 
 enum MapEventEnum {
-  // none,
-  onTap,
+  onClick,
+  onDoubleClick,
   onRightClick,
-  onMouseEnter,
-  onMouseExit,
+  onMouseOver,
+  onMouseOut,
+  onMouseMove,
+  onDragStart,
+  onDrag,
+  onDragEnd,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd,
+  onPinchStart,
+  onPinch,
+  onPinchEnd,
+  onTap,
+  onLongTap,
+  onTwoFingerTap,
+  onDoubleTap,
 }
 
 class MapEventModel {
   String id;
-  MapEventEnum event = MapEventEnum.onTap;
+  MapEventEnum event = MapEventEnum.onClick;
   late dynamic func;
   MapEventModel({required this.id, required this.event, required this.func});
 }

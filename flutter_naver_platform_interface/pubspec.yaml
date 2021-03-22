@@ -12,12 +12,12 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ">=1.0.0 <3.0.0"
-  flutter_naver_map :
-    git: 
-      url : https://github.com/taeilyoon/flutter_naver_map.git
-      path : flutter_naver_map
   # flutter_naver_map :
-  #    path : ../flutter_naver_map
+  #   git: 
+  #     url : https://github.com/taeilyoon/flutter_naver_map.git
+  #     path : flutter_naver_map
+  flutter_naver_map :
+     path : ../flutter_naver_map
 
 dev_dependencies:
   flutter_test:

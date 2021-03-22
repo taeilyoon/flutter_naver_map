@@ -50,7 +50,6 @@ class FlutterNaverMap extends NaverMapPlatform {
               "circles": <CircleOverlay>[],
               "circlejs": <String, web.Circle>{},
             });
-
     // web.Polygon(web.PolygonOptions()
     //   ..map = map.webMap
     //   ..paths = [
@@ -90,54 +89,47 @@ class FlutterNaverMap extends NaverMapPlatform {
   @override
   Future updatePolygon(int id, List<PolygonOverlay> newPolygon) async {
     var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
-    var poly = _naverMaps[id]?["polygons"] as List<PolygonOverlay>;
+    var poligons = _naverMaps[id]?["polygons"] as List<PolygonOverlay>;
     var polyjs = (_naverMaps[id]?["polygonjs"] as Map<String, web.Polygon>);
 
-    poly.forEach((element) {
-      if (newPolygon.contains(element)) {
-        //Modify
-        var newElement = newPolygon.firstWhere((newElement) =>
-            element.polygonOverlayId == newElement.polygonOverlayId);
-        if (newElement != element) {
-          polyjs[element.polygonOverlayId]?.setOptions(newElement.toOptions);
-
-          polyjs[element.polygonOverlayId]?.clearListeners("click");
-          polyjs[element.polygonOverlayId]?.clearListeners("rightClick");
-          polyjs[element.polygonOverlayId]?.addListener("click",
-              allowInterop(() {
-            if (element.onTap != null) {
-              element.onTap!(element.polygonOverlayId);
-            }
-          }));
-          element.eventsHandle?.forEach((key, value) {
-            polyjs[element.polygonOverlayId]?.addListener(key.js,
-                allowInterop(() {
-              value(element.polygonOverlayId);
-            }));
-          });
-        }
-      } else {
-        polyjs[element.polygonOverlayId]?.setMap(null);
-        poly.remove(element);
-      }
-    });
-
-    newPolygon.where((element) => !poly.contains(element)).forEach((element) {
-      poly.add(element);
-      polyjs.putIfAbsent(element.polygonOverlayId, () => element.js(map));
-      polyjs[element.polygonOverlayId]?.addListener("click", allowInterop(() {
-        if (element.onTap != null) {
-          element.onTap!(element.polygonOverlayId);
-        }
-      }));
-      element.eventsHandle?.forEach((key, value) {
-        var eventName = key.js;
-        polyjs[element.polygonOverlayId]?.addListener(eventName,
-            allowInterop(() {
-          value(element.polygonOverlayId);
+    var newOne = newPolygon.toSet().difference(poligons.toSet());
+    var modiOne = newPolygon.toSet().intersection(poligons.toSet());
+    var deleteOne = polyjs.keys
+        .toSet()
+        .difference(newOne.map((e) => e.polygonOverlayId).toSet());
+    newOne.forEach((element) {
+      web.Polygon _ = element.js(map);
+      polyjs[element.polygonOverlayId] = _;
+      MapEventEnum.values.forEach((en) {
+        _.addListener(en.js, allowInterop((_) {
+          (element.eventsHandle![en] ??
+              (_) {
+                print(_);
+              })(element.polygonOverlayId);
         }));
       });
     });
+    modiOne.forEach((element) {
+      polyjs[element.polygonOverlayId]?.setOptions(element.toOptions);
+      MapEventEnum.values.forEach((en) {
+        polyjs[element.polygonOverlayId]?.clearListeners(en.js);
+      });
+      MapEventEnum.values.forEach((en) {
+        polyjs[element.polygonOverlayId]?.addListener(en.js, allowInterop((_) {
+          (element.eventsHandle![en] ?? () {})();
+        }));
+      });
+    });
+    deleteOne.forEach((element) {
+      // print(markerjs[element.markerId]);
+      polyjs[element]?.setMap(null);
+      polyjs.remove(element);
+      poligons.removeWhere((e) => e.polygonOverlayId == element);
+      print(poligons);
+      print(polyjs);
+    });
+
+    poligons = newPolygon;
   }
 
   @override
@@ -145,42 +137,44 @@ class FlutterNaverMap extends NaverMapPlatform {
     var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
     var markers = _naverMaps[id]?["markers"] as List<Marker>;
     var markerjs = (_naverMaps[id]?["markerjs"] as Map<String, web.Marker>);
-    markers.forEach((element) {
-      if (newMarkers.contains(element)) {
-        //Modify
-        var newElement = newMarkers.firstWhere(
-            (newElement) => element.markerId == newElement.markerId);
-        if (newElement != element) {
-          markerjs[element.markerId]?.setOptions(newElement.toOptions);
-          markerjs[element.markerId]?.clearListeners("click");
-          markerjs[element.markerId]?.addListener("click", allowInterop((e) {
-            print(e);
-          }));
-          markerjs[element.markerId]?.clearListeners("click");
-          markerjs[element.markerId]?.clearListeners("rightClick");
-          markerjs[element.markerId]?.addListener("click", allowInterop(() {
-            if (element.onMarkerTab != null) {
-              element.onMarkerTab!(element, {});
-            }
-          }));
-          element.eventsHandle?.forEach((key, value) {
-            markerjs[element.markerId]?.addListener(key.js, allowInterop(() {
-              value(element.markerId);
-            }));
-          });
-        } else {
-          //Remove
-          markerjs[element.markerId]!.setMap(null);
-          markers.remove(element);
-        }
-      }
+
+    var newOne = newMarkers.toSet().difference(markers.toSet());
+    var modiOne = newMarkers.toSet().intersection(markers.toSet());
+    var deleteOne =
+        markerjs.keys.toSet().difference(newOne.map((e) => e.markerId).toSet());
+    newOne.forEach((element) {
+      web.Marker _ = element.js(map);
+      markerjs[element.markerId] = _;
+      MapEventEnum.values.forEach((en) {
+        _.addListener(en.js, allowInterop((_) {
+          (element.eventsHandle![en] ??
+              (_) {
+                print(_);
+              })(element.markerId);
+        }));
+      });
     });
-    newMarkers
-        .where((element) => !markers.contains(element))
-        .forEach((element) {
-      markers.add(element);
-      markerjs.putIfAbsent(element.markerId, () => element.js(map));
+    modiOne.forEach((element) {
+      markerjs[element.markerId]?.setOptions(element.toOptions);
+      MapEventEnum.values.forEach((en) {
+        markerjs[element.markerId]?.clearListeners(en.js);
+      });
+      MapEventEnum.values.forEach((en) {
+        markerjs[element.markerId]?.addListener(en.js, allowInterop((_) {
+          (element.eventsHandle![en] ?? () {})();
+        }));
+      });
     });
+    deleteOne.forEach((element) {
+      // print(markerjs[element.markerId]);
+      markerjs[element]?.setMap(null);
+      markerjs.remove(element);
+      markers.removeWhere((e) => e.markerId == element);
+      print(markers);
+      print(markerjs);
+    });
+
+    markers = newMarkers;
   }
 
   @override
@@ -188,78 +182,75 @@ class FlutterNaverMap extends NaverMapPlatform {
     web.NMap map = _naverMaps[textureId]!["map"].webMap;
 
     MapEventEnum.values.forEach((e) => map.clearListeners(e.js));
-    var tap =
-        events.where((element) => element.event == MapEventEnum.onTap).toList();
-    map.addListener("click", allowInterop((jsLatLng) {
-      print(tap.length);
-    }));
+
+    var tap = events
+        .where((element) => element.event == MapEventEnum.onClick)
+        .toList();
     if (tap.isNotEmpty) {
       map.addListener("click", allowInterop((jsLatLng) {
-        print(tap.length);
         LatLng latLng = LatLng(jsLatLng.coord.y, jsLatLng.coord.x);
         tap.forEach((element) {
           element.func(latLng);
         });
       }));
     }
-    var rightClick =
-        events.where((element) => element.event == MapEventEnum.onTap).toList();
-    if (tap.isNotEmpty) {
-      map.addListener(rightClick[0].event.js, allowInterop((jsLatLng) {
-        LatLng latLng = LatLng(jsLatLng.coord.y, jsLatLng.coord.x);
-        rightClick.forEach((element) {
-          element.func(latLng);
-        });
-      }));
-    }
+    // var rightClick = events
+    //     .where((element) => element.event == MapEventEnum.onRightClick)
+    //     .toList();
+    // if (tap.isNotEmpty) {
+    //   map.addListener(rightClick[0].event.js, allowInterop((jsLatLng) {
+    //     LatLng latLng = LatLng(jsLatLng.coord.y, jsLatLng.coord.x);
+    //     rightClick.forEach((element) {
+    //       element.func(latLng);
+    //     });
+    //   }));
+    // }
   }
 
   Future UpdatePolyline(int id, List<PathOverlay> newPolyline) async {
     var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
-    var polylines = _naverMaps[id]?["polylines"] as List<PathOverlay>;
-    var polylinejs =
-        (_naverMaps[id]?["polylinejs"] as Map<String, web.Polyline>);
+    var markers = _naverMaps[id]?["polylines"] as List<PathOverlay>;
+    var markerjs = (_naverMaps[id]?["polylinejs"] as Map<String, web.Polyline>);
 
-    polylines.forEach((element) {
-      if (newPolyline.contains(element)) {
-        //Modify
-        var newElement = newPolyline.firstWhere(
-            (newElement) => element.pathOverlayId == newElement.pathOverlayId);
-        if (newElement != element) {
-          polylinejs[element.pathOverlayId]?.setOptions(newElement.toOptions);
-          polylinejs[element.pathOverlayId]?.clearListeners("click");
-          polylinejs[element.pathOverlayId]?.addListener("click",
-              allowInterop((e) {
-            print(e);
-          }));
-          polylinejs[element.pathOverlayId]?.clearListeners("click");
-          polylinejs[element.pathOverlayId]?.clearListeners("rightClick");
-          polylinejs[element.pathOverlayId]?.addListener("click",
-              allowInterop(() {
-            if (element.onPathOverlayTab != null) {
-              element.onPathOverlayTab!(element.pathOverlayId);
-            }
-          }));
-          element.eventsHandle?.forEach((key, value) {
-            polylinejs[element.pathOverlayId]?.addListener(key.js,
-                allowInterop(() {
-              value(element.pathOverlayId);
-            }));
-          });
-        } else {
-          //Remove
-          polylinejs[element.pathOverlayId]!.setMap(null);
-          polylines.remove(element);
-        }
-      }
+    var newOne = newPolyline.toSet().difference(markers.toSet());
+    var modiOne = newPolyline.toSet().intersection(markers.toSet());
+    var deleteOne = markerjs.keys
+        .toSet()
+        .difference(newOne.map((e) => e.pathOverlayId.value).toSet());
+    newOne.forEach((element) {
+      web.Polyline _ = element.js(map);
+      markerjs[element.pathOverlayId.value] = _;
+      MapEventEnum.values.forEach((en) {
+        _.addListener(en.js, allowInterop((_) {
+          (element.eventsHandle![en] ??
+              (_) {
+                print(_);
+              })(element.pathOverlayId.value);
+        }));
+      });
     });
-    newPolyline
-        .where((element) => !polylines.contains(element))
-        .forEach((element) {
-      polylines.add(element);
-      polylinejs.putIfAbsent(
-          element.pathOverlayId.value, () => element.js(map));
+    modiOne.forEach((element) {
+      markerjs[element.pathOverlayId.value]?.setOptions(element.toOptions);
+      MapEventEnum.values.forEach((en) {
+        markerjs[element.pathOverlayId.value]?.clearListeners(en.js);
+      });
+      MapEventEnum.values.forEach((en) {
+        markerjs[element.pathOverlayId.value]?.addListener(en.js,
+            allowInterop((_) {
+          (element.eventsHandle![en] ?? (_) {})(element.pathOverlayId.value);
+        }));
+      });
     });
+    deleteOne.forEach((element) {
+      // print(markerjs[element.markerId]);
+      markerjs[element]?.setMap(null);
+      markerjs.remove(element);
+      markers.removeWhere((e) => e.pathOverlayId.value == element);
+      print(markers);
+      print(markerjs);
+    });
+
+    markers = newPolyline;
   }
 
   @override
@@ -294,12 +285,13 @@ class _FlutterNaverMap {
       ..id = '$elementName-$textureId'
       ..style.border = 'none';
     webMap = web.NMap(mapDivElement, option.webMapOption);
-    Future.delayed(Duration(milliseconds: 2), () {
-      webMap.setSize(
-          web.Size(mapDivElement.clientWidth, mapDivElement.clientHeight));
-    });
+
     ui.platformViewRegistry.registerViewFactory('$elementName-$textureId',
         (int viewId) {
+      Future.delayed(Duration(milliseconds: 100), () {
+        webMap.setSize(
+            web.Size(mapDivElement.clientWidth, mapDivElement.clientHeight));
+      });
       return mapDivElement;
     });
   }

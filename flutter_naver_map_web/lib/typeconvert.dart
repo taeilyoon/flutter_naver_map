@@ -22,6 +22,7 @@ extension convertPolyline on PathOverlay {
     ..clickable = true
     ..path = this.coords.map<web.LatLng>((e) => e.js).toList()
     ..strokeColor = this.color.toHashString()
+    ..strokeWeight = 5
     ..strokeOpacity = this.color.alpha;
 }
 
@@ -43,6 +44,9 @@ extension convertMarker on Marker {
   js(web.NMap map) => web.Marker(web.MarkerOptions()
     ..map = map
     ..position = this.position.js);
+  // ..icon = this.webIcon != null
+  //     ? (web.MarkerIcon()..content = this.webIcon!["content"])
+  //     : null);
 
   web.MarkerOptions get toOptions =>
       web.MarkerOptions()..position = this.position.js;
@@ -56,21 +60,69 @@ extension WebColorExtensions on Color {
 extension WebEventEnum on MapEventEnum {
   String get js {
     switch (this) {
-      case MapEventEnum.onTap:
+      case MapEventEnum.onClick:
         return "click";
         break;
 
       case MapEventEnum.onRightClick:
         return "rightclick";
         break;
-      case MapEventEnum.onMouseEnter:
+      case MapEventEnum.onMouseOver:
         return "mouseover";
         break;
-      case MapEventEnum.onMouseExit:
+      case MapEventEnum.onMouseOut:
         return "mouseout";
         break;
-      case MapEventEnum.onMouseExit:
-        return "mouseout";
+      case MapEventEnum.onDoubleClick:
+        return "dblclick";
+        break;
+      case MapEventEnum.onMouseMove:
+        return "mousemove";
+
+        break;
+      case MapEventEnum.onDragStart:
+        return "dragstart";
+
+        break;
+      case MapEventEnum.onDrag:
+        return "drag";
+
+        break;
+      case MapEventEnum.onDragEnd:
+        return "dragend";
+
+        break;
+      case MapEventEnum.onTouchStart:
+        return "touchstart";
+
+        break;
+      case MapEventEnum.onTouchMove:
+        return "touchmove";
+
+        break;
+      case MapEventEnum.onTouchEnd:
+        return "touchend";
+        break;
+      case MapEventEnum.onPinchStart:
+        return "pinchstart";
+        break;
+      case MapEventEnum.onPinch:
+        return "pinch";
+        break;
+      case MapEventEnum.onPinchEnd:
+        return "pinchend";
+        break;
+      case MapEventEnum.onTap:
+        return "tap";
+        break;
+      case MapEventEnum.onLongTap:
+        return "longtap";
+        break;
+      case MapEventEnum.onTwoFingerTap:
+        return "twofingertap";
+        break;
+      case MapEventEnum.onDoubleTap:
+        return "doubletap";
         break;
     }
   }

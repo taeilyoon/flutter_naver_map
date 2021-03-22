@@ -230,17 +230,16 @@ class _NaverMapState extends State<NaverMap> {
         });
         if (widget.onMapCreated != null) {
           if (widget.onMapTap != null) {
-            controller.addEnvent(MapEventModel(
-                id: "${controller._textureId}#onMapTap",
-                event: MapEventEnum.onTap,
-                func: widget.onMapTap));
-          }
-
-          if (widget.onMapTap != null) {
-            controller.addEnvent(MapEventModel(
-                id: "${controller._textureId}#onMapRightClick",
-                event: MapEventEnum.onRightClick,
-                func: widget.onMapRightClick));
+            controller.updateEvnets([
+              MapEventModel(
+                  id: "${controller._textureId}#onMapTap",
+                  event: MapEventEnum.onClick,
+                  func: widget.onMapTap),
+              MapEventModel(
+                  id: "${controller._textureId}#onMapRightClick",
+                  event: MapEventEnum.onRightClick,
+                  func: widget.onMapRightClick)
+            ]);
           }
 
           controller.updateMarkers(widget.markers ?? []);
@@ -315,7 +314,10 @@ class NaverMapController {
   }
 
   removeMarker(String id) {
+    print("Remove_$id");
+
     this.markers.removeWhere((element) => element.markerId == id);
+    print(this.markers);
     updateMarkers(this.markers);
   }
 
@@ -340,12 +342,12 @@ class NaverMapController {
 
   addPath(PathOverlay polygon) {
     this.paths.add(polygon);
-    updatePolygon(polygons);
+    updatePath(paths);
   }
 
-  updatePath(List<PathOverlay> polygons) {
-    if (this.paths != polygons) {
-      this.paths = polygons;
+  updatePath(List<PathOverlay> newpaths) {
+    if (this.paths != newpaths) {
+      this.paths = newpaths;
     }
     _videoPlayerPlatform.UpdatePolyline(_textureId, paths);
   }
