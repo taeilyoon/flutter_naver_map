@@ -86,23 +86,29 @@ packages:
   flutter_naver_map:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: flutter_naver_map
+      ref: HEAD
+      resolved-ref: f8aeff688a849c3626872de1e45162b8956086bb
+      url: "https://github.com/taeilyoon/flutter_naver_map.git"
+    source: git
     version: "0.0.1"
   flutter_naver_map_web:
     dependency: transitive
     description:
-      path: "../../flutter_naver_map_web"
-      relative: true
-    source: path
+      path: flutter_naver_map_web
+      ref: HEAD
+      resolved-ref: f8aeff688a849c3626872de1e45162b8956086bb
+      url: "https://github.com/taeilyoon/flutter_naver_map.git"
+    source: git
     version: "0.0.1"
   flutter_naver_platform_interface:
     dependency: transitive
     description:
-      path: "../../flutter_naver_platform_interface"
-      relative: true
-    source: path
+      path: flutter_naver_platform_interface
+      ref: HEAD
+      resolved-ref: f8aeff688a849c3626872de1e45162b8956086bb
+      url: "https://github.com/taeilyoon/flutter_naver_map.git"
+    source: git
     version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
@@ -138,9 +144,11 @@ packages:
   naver_map_js2dart:
     dependency: transitive
     description:
-      path: "../../naver_map_js2dart"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: ebb2addaad8237bd946feba8b6dba0a4866c009c
+      url: "https://github.com/taeilyoon/naver_map_js2dart.git"
+    source: git
     version: "0.0.1"
   path:
     dependency: transitive
