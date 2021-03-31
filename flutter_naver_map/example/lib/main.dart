@@ -110,33 +110,31 @@ class _MyAppState extends State<MyApp> {
           //         content: contentString),
           //     "info");
 
-          controller.updatePolygon([
-            PolygonOverlay("polygonOverlayId", [
-              LatLng(37.37544345085402, 127.11224555969238),
-              LatLng(37.37230584065902, 127.10791110992432),
-              LatLng(37.35975408751081, 127.10795402526855),
-              LatLng(37.359924641705476, 127.11576461791992),
-              LatLng(37.35931064479073, 127.12211608886719),
-              LatLng(37.36043630196386, 127.12293148040771),
-              LatLng(37.36354029942161, 127.12310314178465),
-              LatLng(37.365211629488016, 127.12456226348876),
-              LatLng(37.37544345085402, 127.11224555969238)
-            ], onTap: (_) {
-              print(_);
-            }, globalZIndex: 100)
-              ..eventsHandle = {
-                MapEventEnum.onMouseOver: (_) {
-                  controller.showInfoWindow(
-                      InfoWindow(
-                          position: LatLng(37.3674001, 127.1181196),
-                          content: "hello"),
-                      "info");
-                },
-                MapEventEnum.onMouseOut: (_) {
-                  controller.hideInfoWindow();
-                }
+          controller.addPolygon(PolygonOverlay("polygonOverlayId", [
+            LatLng(37.37544345085402, 127.11224555969238),
+            LatLng(37.37230584065902, 127.10791110992432),
+            LatLng(37.35975408751081, 127.10795402526855),
+            LatLng(37.359924641705476, 127.11576461791992),
+            LatLng(37.35931064479073, 127.12211608886719),
+            LatLng(37.36043630196386, 127.12293148040771),
+            LatLng(37.36354029942161, 127.12310314178465),
+            LatLng(37.365211629488016, 127.12456226348876),
+            LatLng(37.37544345085402, 127.11224555969238)
+          ], onTap: (_) {
+            print(_);
+          }, globalZIndex: 100)
+            ..eventsHandle = {
+              MapEventEnum.onMouseOver: (_) {
+                controller.showInfoWindow(
+                    InfoWindow(
+                        position: LatLng(37.3674001, 127.1181196),
+                        content: "hello"),
+                    "info");
+              },
+              MapEventEnum.onMouseOut: (_) {
+                controller.hideInfoWindow();
               }
-          ]);
+            });
         },
       ),
       body: NaverMap(

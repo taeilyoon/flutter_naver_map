@@ -47,13 +47,13 @@ extension convertMarker on Marker {
       ? web.Marker(this.toOptions..map = map)
       : web.Marker(this.toOptions..map = map);
 
-  web.MarkerOptions get toOptions => web.MarkerOptions()
-    ..position = this.position.js
-    ..markerIcon = webIcon != null
-        ? (web.MarkerIcon()
-          ..content = this.webIcon?["content"]
-          ..anchor = (this.webIcon?["anchor"] as Point).js)
-        : null;
+  web.MarkerOptions get toOptions =>
+      web.MarkerOptions()..position = this.position.js;
+  // ..markerIcon = webIcon != null
+  //     ? (web.MarkerIcon()
+  //       ..content = this.webIcon?["content"]
+  //       ..anchor = (this.webIcon?["anchor"] as Point).js)
+  // : null;
 }
 
 extension NaverMapPoint on Point {

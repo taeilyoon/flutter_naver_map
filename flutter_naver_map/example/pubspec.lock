@@ -138,11 +138,9 @@ packages:
   naver_map_js2dart:
     dependency: transitive
     description:
-      path: "."
-      ref: main
-      resolved-ref: b265356278feb08ce19afc882ee5505dd1e49cc1
-      url: "https://github.com/taeilyoon/naver_map_js2dart.git"
-    source: git
+      path: "../../naver_map_js2dart"
+      relative: true
+    source: path
     version: "0.0.1"
   path:
     dependency: transitive
@@ -169,7 +167,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.0"
   stack_trace:
     dependency: transitive
     description:

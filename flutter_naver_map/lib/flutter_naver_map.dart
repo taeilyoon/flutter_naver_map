@@ -277,10 +277,10 @@ class NaverMapController {
   int _textureId = kUninitializedTextureId;
   late Completer<void> _creatingCompleter;
 
-  List<Marker> markers = [];
-  List<PolygonOverlay> polygons = [];
-  List<MapEventModel> events = [];
-  List<PathOverlay> paths = [];
+  List<Marker> markers = const <Marker>[];
+  List<PolygonOverlay> polygons = const <PolygonOverlay>[];
+  List<MapEventModel> events = const <MapEventModel>[];
+  List<PathOverlay> paths = <PathOverlay>[];
   LatLng? location;
 
   /// This is just exposed for testing. It shouldn't be used by anyone depending

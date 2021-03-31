@@ -13,10 +13,8 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  naver_map_js2dart : 
-    git: 
-      url : https://github.com/taeilyoon/naver_map_js2dart.git
-      ref : main
+  # naver_map_js2dart : 
+  #   path : ../naver_map_js2dart 
   # flutter_naver_platform_interface :
   #   path : ../flutter_naver_platform_interface
   # flutter_naver_map :
@@ -29,7 +27,10 @@ dependencies:
     git: 
       url : https://github.com/taeilyoon/flutter_naver_map.git
       path: flutter_naver_map
-
+  naver_map_js2dart : 
+    git: 
+      url : https://github.com/taeilyoon/naver_map_js2dart.git
+      ref : main
 
 dev_dependencies:
   flutter_test:

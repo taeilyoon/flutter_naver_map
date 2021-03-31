@@ -125,8 +125,8 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: bb5789878202d85c0fe9fbd977855b6eb0af4de1
+      ref: main
+      resolved-ref: d32aa2618337e42a06006bfebaabc91c76f287f0
       url: "https://github.com/taeilyoon/naver_map_js2dart.git"
     source: git
     version: "0.0.1"
