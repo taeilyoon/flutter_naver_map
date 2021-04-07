@@ -170,7 +170,7 @@ class FlutterNaverMap extends NaverMapPlatform {
     });
     deleteOne.forEach((element) {
       // print(markerjs[element.markerId]);
-      markerjs[element]?.setMap(null);
+      markerjs[element]!.setMap(null);
       markerjs.remove(element);
       markers.removeWhere((e) => e.markerId == element);
       print(markers);
@@ -191,9 +191,14 @@ class FlutterNaverMap extends NaverMapPlatform {
         .toList();
     if (tap.isNotEmpty) {
       map.addListener("click", allowInterop((jsLatLng) {
+        print(jsLatLng);
         LatLng latLng = LatLng(jsLatLng.coord.y, jsLatLng.coord.x);
+        print(jsLatLng);
         tap.forEach((element) {
-          element.func(latLng);
+          if (element.func != null) {
+            element.func(latLng);
+          }
+          print(element);
         });
       }));
     }
