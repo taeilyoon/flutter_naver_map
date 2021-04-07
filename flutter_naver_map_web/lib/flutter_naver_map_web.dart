@@ -111,6 +111,7 @@ class FlutterNaverMap extends NaverMapPlatform {
         }));
       });
     });
+
     modiOne.forEach((element) {
       polyjs[element.polygonOverlayId]?.setOptions(element.toOptions);
       MapEventEnum.values.forEach((en) {
@@ -207,6 +208,15 @@ class FlutterNaverMap extends NaverMapPlatform {
     //     });
     //   }));
     // }
+  }
+
+  @override
+  Future updatePolylineOne(int id, PathOverlay poly) async {
+    var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
+    var markers = _naverMaps[id]?["polylines"] as List<PathOverlay>;
+    var markerjs = (_naverMaps[id]?["polylinejs"] as Map<String, web.Polyline>);
+    markerjs[poly.pathOverlayId.value]
+        ?.setPath(poly.coords.map((e) => e.js).toList());
   }
 
   @override

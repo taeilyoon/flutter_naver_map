@@ -70,4 +70,6 @@ abstract class NaverMapPlatform {
   Future showWindow(int id, InfoWindow window, String markerId) async {}
 
   void hideWindow(int textureId) {}
+
+  Future updatePolylineOne(int textureId, PathOverlay paths) async {}
 }

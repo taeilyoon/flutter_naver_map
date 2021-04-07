@@ -365,6 +365,10 @@ class NaverMapController {
     _videoPlayerPlatform.UpdatePolyline(_textureId, paths);
   }
 
+  updatePolylineOne(PathOverlay path) {
+    _videoPlayerPlatform.updatePolylineOne(_textureId, path);
+  }
+
   showInfoWindow(InfoWindow info, markerId) {
     _videoPlayerPlatform.showWindow(_textureId, info, markerId);
   }
