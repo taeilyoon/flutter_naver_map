@@ -215,8 +215,21 @@ class FlutterNaverMap extends NaverMapPlatform {
     var map = (_naverMaps[id]?["map"] as _FlutterNaverMap).webMap;
     var markers = _naverMaps[id]?["polylines"] as List<PathOverlay>;
     var markerjs = (_naverMaps[id]?["polylinejs"] as Map<String, web.Polyline>);
-    markerjs[poly.pathOverlayId.value]
-        ?.setPath(poly.coords.map((e) => e.js).toList());
+    if (markerjs[poly.pathOverlayId.value] == null) {
+      web.Polyline _ = poly.js(map);
+      markerjs[poly.pathOverlayId.value] = _;
+      MapEventEnum.values.forEach((en) {
+        _.addListener(en.js, allowInterop((_) {
+          (poly.eventsHandle?[en] ??
+              (_) {
+                print(_);
+              })(poly.pathOverlayId.value);
+        }));
+      });
+    } else {
+      markerjs[poly.pathOverlayId.value]
+          ?.setPath(poly.coords.map((e) => e.js).toList());
+    }
   }
 
   @override
