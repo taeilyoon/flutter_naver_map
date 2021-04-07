@@ -103,7 +103,9 @@ class _MyAppState extends State<MyApp> {
         onMapCreated: (c) {
           controller = c;
         },
-        onMapTap: (lat) {},
+        onMapTap: (lat) {
+          print(lat);
+        },
         markers: [
           Marker(
               markerId: "info",

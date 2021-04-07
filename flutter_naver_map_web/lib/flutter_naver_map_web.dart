@@ -190,9 +190,10 @@ class FlutterNaverMap extends NaverMapPlatform {
         .where((element) => element.event == MapEventEnum.onClick)
         .toList();
     if (tap.isNotEmpty) {
-      map.addListener("click", allowInterop((jsLatLng) {
+      map.addListener("click", allowInterop((web.MapEventListener jsLatLng) {
         print(jsLatLng);
-        LatLng latLng = LatLng(jsLatLng.coord.y, jsLatLng.coord.x);
+        LatLng latLng = LatLng(
+            jsLatLng.coord.lat().toDouble(), jsLatLng.coord.lng().toDouble());
         print(jsLatLng);
         tap.forEach((element) {
           if (element.func != null) {
