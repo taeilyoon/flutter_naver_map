@@ -277,10 +277,10 @@ class NaverMapController {
   int _textureId = kUninitializedTextureId;
   late Completer<void> _creatingCompleter;
 
-  List<Marker> markers = const <Marker>[];
-  List<PolygonOverlay> polygons = const <PolygonOverlay>[];
-  List<MapEventModel> events = const <MapEventModel>[];
-  List<PathOverlay> paths = <PathOverlay>[];
+  late List<Marker> markers;
+  late List<PolygonOverlay> polygons;
+  late List<MapEventModel> events;
+  late List<PathOverlay> paths;
   LatLng? location;
 
   /// This is just exposed for testing. It shouldn't be used by anyone depending
@@ -288,6 +288,10 @@ class NaverMapController {
   int get textureId => _textureId;
 
   initialize(initialCameraPosition) async {
+    markers = List<Marker>.from([], growable: true);
+    polygons = List<PolygonOverlay>.from([], growable: true);
+    events = <MapEventModel>[];
+    paths = List<PathOverlay>.from([], growable: true);
     var mapOption = MapOption(initialCameraPosition: initialCameraPosition);
     _textureId = (await _videoPlayerPlatform.create(mapOption)) ??
         kUninitializedTextureId;
@@ -314,7 +318,8 @@ class NaverMapController {
   }
 
   addMarker(Marker marker) {
-    this.markers.add(marker);
+    markers = List.from(markers);
+    markers.add(marker);
     _videoPlayerPlatform.updateMarker(_textureId, markers);
   }
 
@@ -334,7 +339,8 @@ class NaverMapController {
   }
 
   addPolygon(PolygonOverlay polygon) {
-    this.polygons.add(polygon);
+    polygons = List.from(polygons);
+    polygons.add(polygon);
     updatePolygon(polygons);
   }
 
@@ -346,7 +352,8 @@ class NaverMapController {
   }
 
   addPath(PathOverlay polygon) {
-    this.paths.add(polygon);
+    paths = List.from(paths);
+    paths.add(polygon);
     updatePath(paths);
   }
 

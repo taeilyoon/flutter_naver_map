@@ -225,7 +225,7 @@ class FlutterNaverMap extends NaverMapPlatform {
       markerjs[element.pathOverlayId.value] = _;
       MapEventEnum.values.forEach((en) {
         _.addListener(en.js, allowInterop((_) {
-          (element.eventsHandle![en] ??
+          (element.eventsHandle?[en] ??
               (_) {
                 print(_);
               })(element.pathOverlayId.value);
